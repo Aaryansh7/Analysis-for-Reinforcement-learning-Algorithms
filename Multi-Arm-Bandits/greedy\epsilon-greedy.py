@@ -211,7 +211,7 @@ if __name__ == "__main__":
 
 	# Setup objects to contain infomration about the agents, testbed, and environment
 	testbed = Testbed(nArms=nArms,mean=0,stDev=1)
-	agents = [Agent(nArms=nArms,eProb=0.1),Agent_step_constant(nArms=nArms,eProb=0.1)]
+	agents = [Agent(nArms=nArms),Agent(nArms=nArms,eProb=0.1),Agent(nArms=nArms,eProb=0.01)]
 	environment = Environment(testbed=testbed,agents=agents,plays=plays,iterations=iterations)
 
 	# Run Environment
