@@ -236,9 +236,7 @@ class Environment(object):
 		for iIter in tqdm(range(self.iterations)):
 			#print("iter no."),
 			#print(iIter)
-			## Print statement after every 100 iterations
-			if (iIter%100) == 0:
-				print("Completed Iterations: ",iIter)
+			
 
 			#Reset testbed and all agents
 			self.testbed.reset()

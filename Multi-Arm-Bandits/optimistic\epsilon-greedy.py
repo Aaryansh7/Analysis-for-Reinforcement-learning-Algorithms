@@ -1,8 +1,8 @@
 '''
 ###############################################################################################
-	10-Armed Testbed (Reinforcement Learning: An Introduction, Sutton, Barto, ex 2.5)
+	10-Armed Testbed (Reinforcement Learning: An Introduction, Sutton, Barto)
 
-	Program is to compare the greedy action and epsilon-greedy action methods in a 10-armed bandit testbed, presented
+	Program is to compare the optimistic intial methods in a 10-armed bandit testbed, presented
 	in the Reinforcement Learning: An Introduction book, Sutton, Barto, 
 ###############################################################################################
 '''
@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import time
+
 
 ################################################################
 # TestBed class containing the states and actions, and the overall rules of the test
@@ -27,8 +28,7 @@ class Testbed(object):
 		self.stDev = stDev      # Standard Deviation
 
 		self.actArr = np.zeros(nArms)   # Array to store action values
-		self.optim = 0 
-		#self.var=np.random.normal(self.mean, self.stDev)             # Store optimal value for greedy
+		self.optim = 0  # Store optimal value for greedy
 		self.reset()
 
 	# Reset testbed for next iteration
@@ -38,11 +38,13 @@ class Testbed(object):
 		
 		# Identify the maximum value in action array
 		self.optim = np.argmax(self.actArr)
+
 	def update(self):
 		#self.stDev+=0.0001
 		self.var=np.random.normal(0, 0.01,self.nArms)
 		self.actArr+=self.var
 		self.optim = np.argmax(self.actArr)
+
 	def print(self):
 		print("actArr is: "),
 		print(self.actArr)
@@ -50,7 +52,85 @@ class Testbed(object):
 ################################################################
 # Agent Class - Controls the agents movement and behaviour in the environment interacting with the testbed
 # and receives information on the current position
-class Agent(object):
+class Agent_optimistic(object):
+
+	# Constructor
+	def __init__(self,nArms, eProb=0):
+		self.nArms = nArms      # Number of arms
+		self.eProb = eProb      # Epsilon probability
+
+		self.timeStep = 0                    # Time Step t
+		self.lastAction = None               # Store last action
+
+		self.kAction = np.zeros(nArms)          # count of actions taken at time t
+		self.rSum = np.zeros(nArms)             # Sums number of rewards
+		self.valEstimates = np.zeros(nArms)     # action value estimates sum(rewards)/Amount
+		self.valEstimates+=4                  #initializing with optimal value
+
+	# Return string for graph legend
+	def __str__(self):
+		
+		return "Optimistic-greedy"
+		
+
+	# Selects action based on a epsilon-greedy behaviour,
+	# if epsilon equals zero, then the agent performs a greedy selection
+	def action(self):
+
+		### POLICY ###
+		# Epsilon method
+		'''
+		randProb = np.random.random()   # Pick random probability between 0-1
+		if randProb < self.eProb:
+			a = np.random.choice(len(self.valEstimates))    # Select random action
+		'''
+		# Greedy Method
+		#else:
+		maxAction = np.argmax(self.valEstimates)     # Find max value estimate
+		# identify the corresponding action, as array containing only actions with max
+		action = np.where(self.valEstimates == np.argmax(self.valEstimates))[0]
+
+		# If multiple actions contain the same value, randomly select an action
+		if len(action) == 0:
+			a = maxAction
+		else:
+			a = np.random.choice(action)
+
+		# save last action in variable, and return result
+		self.lastAction = a
+		return a
+
+
+	# Interpreter - updates the value extimates amounts based on the last action
+	def interpreter(self, reward):
+		# Add 1 to the number of action taken in step
+		At = self.lastAction
+		self.step_size=0.1
+
+		self.kAction[At] += 1       # Add 1 to action selection
+		self.rSum[At] += reward     # Add reward to sum array
+
+		# Calculate new action-value, sum(r)/ka
+		#self.valEstimates[At] = self.rSum[At]/self.kAction[At]
+		self.valEstimates[At] += self.step_size*(reward-self.valEstimates[At]) 
+		# Increase time step
+		self.timeStep += 1
+
+
+	# Reset all variables for next iteration
+	def reset(self):
+		self.timeStep = 0                    # Time Step t
+		self.lastAction = None               # Store last action
+
+		self.kAction[:] = 0                  # count of actions taken at time t
+		self.rSum[:] = 0
+		self.valEstimates[:] = 5   # action value estimates Qt ~= Q*(a)
+
+
+
+################################################################
+
+class Agent_epsilon(object):
 
 	# Constructor
 	def __init__(self,nArms, eProb=0):
@@ -64,14 +144,10 @@ class Agent(object):
 		self.rSum = np.zeros(nArms)             # Sums number of rewards
 		self.valEstimates = np.zeros(nArms)     # action value estimates sum(rewards)/Amount
 
-
 	# Return string for graph legend
 	def __str__(self):
 		
-		if self.eProb == 0:
-			return "Greedy"
-		else:
-			return "Epsilon = " + str(self.eProb)
+		return "epsilon-greedy"
 		
 
 	# Selects action based on a epsilon-greedy behaviour,
@@ -105,14 +181,14 @@ class Agent(object):
 	def interpreter(self, reward):
 		# Add 1 to the number of action taken in step
 		At = self.lastAction
-		self.step_size=0.01
+		self.step_size=0.1
 
 		self.kAction[At] += 1       # Add 1 to action selection
 		self.rSum[At] += reward     # Add reward to sum array
 
 		# Calculate new action-value, sum(r)/ka
-		self.valEstimates[At] = self.rSum[At]/self.kAction[At]
-		#self.valEstimates[At] += self.step_size*(reward-self.valEstimates[At]) 
+		#self.valEstimates[At] = self.rSum[At]/self.kAction[At]
+		self.valEstimates[At] += self.step_size*(reward-self.valEstimates[At]) 
 		# Increase time step
 		self.timeStep += 1
 
@@ -153,7 +229,7 @@ class Environment(object):
 		for iIter in tqdm(range(self.iterations)):
 			#print("iter no."),
 			#print(iIter)
-			
+
 			#Reset testbed and all agents
 			self.testbed.reset()
 			#self.testbed.print()
@@ -208,7 +284,7 @@ if __name__ == "__main__":
 
 	# Setup objects to contain infomration about the agents, testbed, and environment
 	testbed = Testbed(nArms=nArms,mean=0,stDev=1)
-	agents = [Agent(nArms=nArms),Agent(nArms=nArms,eProb=0.1),Agent(nArms=nArms,eProb=0.01)]
+	agents = [Agent_optimistic(nArms=nArms,eProb=0),Agent_epsilon(nArms=nArms,eProb=0.1)]
 	environment = Environment(testbed=testbed,agents=agents,plays=plays,iterations=iterations)
 
 	# Run Environment
@@ -216,7 +292,8 @@ if __name__ == "__main__":
 	g1Scores, g2Optimal = environment.play()
 	print("Execution time: %s seconds" % (time.time() - start_time))
 
-
+	plt.style.use('fivethirtyeight')
+	
 	#Graph 1 - Averate rewards over all plays
 	plt.title("10-Armed TestBed - Average Rewards")
 	plt.plot(g1Scores)
@@ -224,8 +301,9 @@ if __name__ == "__main__":
 	plt.xlabel('Plays')
 	plt.legend(agents, loc=4)
 	plt.show()
+	
 
-	#Graph 1 - optimal selections over all plays
+	#Graph 2 - optimal selections over all plays
 	plt.title("10-Armed TestBed - % Optimal Action")
 	plt.plot(g2Optimal * 100)
 	plt.ylim(0, 100)
