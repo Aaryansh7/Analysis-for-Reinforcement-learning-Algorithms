@@ -5,7 +5,7 @@ For each method there have been slight variations in the way  ten-armed test ban
 
 ### 1.Epsilon-Greedy and Greedy actions
 
-run the code:
+run the code(as per the correct file path):
 >python3 greedy\\epsilon-greedy.py
 
 #### Results are as follows: 
@@ -15,7 +15,7 @@ run the code:
 
 ### 2.Sample-Average vs Constant-step_size
 
-run the code
+run the code(as per the correct file path):
 >python3 Sample-avg\\constant-step_size.py
 
 #### Results are as follows
