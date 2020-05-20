@@ -30,3 +30,13 @@ run the code(as per the correct file path):
 #### Results are as follows
 
 <img src="result_images/Figure_6.png" alt="drawing" width="420"/><img src="result_images/Figure_7.png" alt="drawing" width="420"/>
+
+
+### 2.Upper Confidence Bound
+
+run the code(as per the correct file path):
+>python3 ucb.py
+
+#### Results are as follows
+
+<img src="result_images/Figure_8.png" alt="drawing" width="420"/><img src="result_images/Figure_9.png" alt="drawing" width="420"/>
