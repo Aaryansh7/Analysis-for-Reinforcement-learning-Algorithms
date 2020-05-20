@@ -21,3 +21,12 @@ run the code(as per the correct file path):
 #### Results are as follows
 
 <img src="result_images/Figure_1.png" alt="drawing" width="420"/><img src="result_images/Figure_2.png" alt="drawing" width="420"/>
+
+### 3.Optimistic-greedy vs epsilon-greedy
+
+run the code(as per the correct file path):
+>python3 optimistic\\epsilon-greedy.py
+
+#### Results are as follows
+
+<img src="result_images/Figure_6.png" alt="drawing" width="420"/><img src="result_images/Figure_7.png" alt="drawing" width="420"/>
