@@ -293,6 +293,7 @@ if __name__ == "__main__":
 	print("Execution time: %s seconds" % (time.time() - start_time))
 
 	plt.style.use('fivethirtyeight')
+
 	
 	#Graph 1 - Averate rewards over all plays
 	plt.title("10-Armed TestBed - Average Rewards")
@@ -300,6 +301,7 @@ if __name__ == "__main__":
 	plt.ylabel('Average Reward')
 	plt.xlabel('Plays')
 	plt.legend(agents, loc=4)
+	plt.tight_layout()
 	plt.show()
 	
 
@@ -310,5 +312,6 @@ if __name__ == "__main__":
 	plt.ylabel('% Optimal Action')
 	plt.xlabel('Plays')
 	plt.legend(agents, loc=4)
+	plt.tight_layout()
 	plt.show()
 
