@@ -27,25 +27,26 @@ class Testbed(object):
 		self.stDev = stDev      # Standard Deviation
 
 		self.actArr = np.zeros(nArms)   # Array to store action values
-		self.optim = 0 
-		#self.var=np.random.normal(self.mean, self.stDev)             # Store optimal value for greedy
+		self.optim = 0             # Store optimal value for greedy
 		self.reset()
 
 	# Reset testbed for next iteration
 	def reset(self):
 		# Set random gaussian/normal values using numpy function, requires mean, standard deviation and number of arms
-		#self.actArr = np.random.normal(self.mean, self.stDev, self.nArms)
+		
 		self.actArr*=0
 		self.var=np.random.normal(self.mean, self.stDev)
 		self.actArr+=self.var
 
 		# Identify the maximum value in action array
 		self.optim = np.argmax(self.actArr)
+
 	def update(self):
-		#self.stDev+=0.0001
+
 		self.var=np.random.normal(0, 0.01,self.nArms)
 		self.actArr+=self.var
 		self.optim = np.argmax(self.actArr)
+
 	def print(self):
 		print("actArr is: "),
 		print(self.actArr)
@@ -70,16 +71,9 @@ class Agent(object):
 
 	# Return string for graph legend
 	def __str__(self):
-		'''
-		if self.eProb == 0:
-			return "Greedy"
-		else:
-			return "Epsilon = " + str(self.eProb)
-		'''
+		
 		return "sample-average"
 
-	# Selects action based on a epsilon-greedy behaviour,
-	# if epsilon equals zero, then the agent performs a greedy selection
 	def action(self):
 
 		### POLICY ###
@@ -114,9 +108,9 @@ class Agent(object):
 		self.kAction[At] += 1       # Add 1 to action selection
 		self.rSum[At] += reward     # Add reward to sum array
 
-		# Calculate new action-value, sum(r)/ka
+		# Calculate new action-value
 		self.valEstimates[At] = self.rSum[At]/self.kAction[At]
-		#self.valEstimates[At] += self.step_size*(reward-self.valEstimates[At]) 
+		
 		# Increase time step
 		self.timeStep += 1
 
@@ -149,17 +143,9 @@ class Agent_step_constant(object):
 
 	# Return string for graph legend
 	def __str__(self):
-		'''
-		if self.eProb == 0:
-			return "Greedy"
-		else:
-			return "Epsilon = " + str(self.eProb)
-		'''
+		
 		return "constant step size"
 
-
-	# Selects action based on a epsilon-greedy behaviour,
-	# if epsilon equals zero, then the agent performs a greedy selection
 	def action(self):
 
 		### POLICY ###
@@ -195,7 +181,6 @@ class Agent_step_constant(object):
 		self.rSum[At] += reward     # Add reward to sum array
 
 		# Calculate new action-value, sum(r)/ka
-		#self.valEstimates[At] = self.rSum[At]/self.kAction[At]
 		self.valEstimates[At] += self.step_size*(reward-self.valEstimates[At]) 
 		# Increase time step
 		self.timeStep += 1

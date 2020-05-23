@@ -14,31 +14,33 @@ import matplotlib.pyplot as plt
 
 class Agent(object):
 	
-	def __init__(self,nAct,Prob,theta):
+	def __init__(self,nAct,Prob,theta,sweep):
 		self.value_function=np.zeros(nAct)
 		self.policy=np.zeros(nAct) 
 		self.action=None
 		self.reward=None
 		self.Prob=Prob
 		self.theta=theta
+		self.sweep=sweep
 
-	def action(self,state):
-		action=np.random.randint(low=0,high=state)
+	def reset(self):
+		self.value_function*=0
 
-		return action
-	'''		
-	def policy_improvement(self,reward):
+	def __str__(self):
+		'''
+		if self.eProb == 0:
+			return "Greedy"
+		else:
+			return "Epsilon = " + str(self.eProb)
+		'''
+		return " Sweep = " +str(self.sweep)
 
-		policy_stable=True
-		for s in range(len(policy)):
-			old_action=self.policy(s)
 
-	'''
 	def q_greedify_policy(self, state):
 		val_max=[]
 		max=float("-inf")
 		for act in range(state):
-			exp_return=self.expectedReturn(s,act)
+			exp_return=self.expectedReturn(state,act)
 			if exp_return>max:
 				max=exp_return
 				val_max*=0
@@ -52,22 +54,24 @@ class Agent(object):
 			if self.value_function[nextState]==max:
 				val_max.append(nextState)
 			'''
-		print(val_max)
-		index=np.random.randint(low=0,high=len(val_max))
+		#print(val_max)
+		lenth=len(val_max)
+		index=np.random.randint(low=0,high=lenth)
 		action=val_max[index]
 		self.policy[state]=action
 
 	def value_iteration(self):
-		while True:
-			delta = 0
+		#while True:
+			#delta = 0
+		for sweep in range(self.sweep):
 			for s in range(1,len(self.value_function)):
 				v = self.value_function[s]
 				self.bellman_optimality_update(s)
-				delta = max(delta, abs(v - self.value_function[s]))
-			if delta < self.theta:
-				break
+				#delta = max(delta, abs(v - self.value_function[s]))
+			#if delta < self.theta:
+				#break
 	#pi = np.ones((len(env.S), len(env.A))) / len(env.A)
-		for s in range(len(self.policy)):
+		for s in range(1,len(self.policy)):
 			self.q_greedify_policy(s)
 
 		V=self.value_function
@@ -117,10 +121,19 @@ class Environment(object):
 	def play(self):
 		V=None
 		pi=None
+		main_V=np.zeros((len(self.agents),100))
+		main_pi=np.zeros((len(self.agents),100))
+		agntcnt=0
+
 		for iIter in tqdm(range(self.iterations)):
 			for agent in self.agents:
+
 				V,pi=agent.value_iteration()
-		return V,pi
+				main_V[agntcnt]=V
+				main_pi[agntcnt]=pi
+				agntcnt+=1
+
+		return main_V.T,main_pi.T
 				
 
 
@@ -129,9 +142,9 @@ class Environment(object):
 if __name__ == "__main__":
 	start_time = time.time()    #store time to monitor execution
 	nAct = 100                  
-	iterations = 2000                     # number of pplays per iteration
+	iterations = 1                     # number of pplays per iteration
 
-	agents = [Agent(nAct=nAct,Prob=0.4,theta=0.1)]
+	agents = [Agent(nAct=nAct,Prob=0.4,theta=0.1,sweep=100)]#,Agent(nAct=nAct,Prob=0.4,theta=0.1,sweep=2),Agent(nAct=nAct,Prob=0.4,theta=0.1,sweep=3),Agent(nAct=nAct,Prob=0.4,theta=0.1,sweep=32)]
 	environment = Environment(agents=agents,iterations=iterations)
 
 	# Run Environment
@@ -145,7 +158,7 @@ if __name__ == "__main__":
 	plt.plot(V)
 	plt.ylabel('Value Estimates')
 	plt.xlabel('State')
-	#plt.legend(agents, loc=4)
+	plt.legend(agents, loc=4)
 	plt.show()
 
 	#Graph 1 - optimal selections over all plays
@@ -154,7 +167,7 @@ if __name__ == "__main__":
 	#plt.ylim(0, 100)
 	plt.ylabel('policy')
 	plt.xlabel('state')
-	#plt.legend(agents, loc=4)
+	plt.legend(agents, loc=4)
 	plt.show()
 
 
