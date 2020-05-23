@@ -9,4 +9,4 @@ run the code(as per the correct file path):
 
 #### Results are as follows: 
 
-<img src="result_images/Figure_4.png" alt="drawing" width="420"/><img src="result_images/Figure_3.png" alt="drawing" width="420"/>
+<img src="result_images/Figure_1.png" alt="drawing" width="420"/><img src="result_images/Figure_3.png" alt="drawing" width="420"/>
