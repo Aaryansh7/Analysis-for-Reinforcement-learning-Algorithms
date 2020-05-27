@@ -19,20 +19,15 @@ class Agent(object):
 		self.policy=np.zeros(nAct) 
 		self.action=None
 		self.reward=None
-		self.Prob=Prob
-		self.theta=theta
-		self.sweep=sweep
+		self.Prob=Prob               #probability for heads
+		self.theta=theta             #limit of delta in value iteration
+		self.sweep=sweep             #no.of sweeps
 
 	def reset(self):
 		self.value_function*=0
 
 	def __str__(self):
-		'''
-		if self.eProb == 0:
-			return "Greedy"
-		else:
-			return "Epsilon = " + str(self.eProb)
-		'''
+		
 		return " Sweep = " +str(self.sweep)
 
 
@@ -46,31 +41,24 @@ class Agent(object):
 				val_max*=0
 			if exp_return==max:
 				val_max.append(act)
-				'''
-			nextState=act+state
-			if self.value_function[nextState]>max:
-				max=self.value_function[nextState]
-				val_max*=0
-			if self.value_function[nextState]==max:
-				val_max.append(nextState)
-			'''
-		#print(val_max)
-		lenth=len(val_max)
-		index=np.random.randint(low=0,high=lenth)
+		
+		index=np.random.randint(low=0,high=len(val_max))
 		action=val_max[index]
 		self.policy[state]=action
 
+
+
 	def value_iteration(self):
-		#while True:
-			#delta = 0
-		for sweep in range(self.sweep):
+		#while True:                                        ##I have written both the codes for sweeps as well as 
+			#delta = 0                                        # by using delta/theta method.Because the book has graphs for sweeps
+		for sweep in range(self.sweep):                         #hence it is not commented
 			for s in range(1,len(self.value_function)):
 				v = self.value_function[s]
 				self.bellman_optimality_update(s)
 				#delta = max(delta, abs(v - self.value_function[s]))
 			#if delta < self.theta:
 				#break
-	#pi = np.ones((len(env.S), len(env.A))) / len(env.A)
+
 		for s in range(1,len(self.policy)):
 			self.q_greedify_policy(s)
 
@@ -142,9 +130,9 @@ class Environment(object):
 if __name__ == "__main__":
 	start_time = time.time()    #store time to monitor execution
 	nAct = 100                  
-	iterations = 1                     # number of pplays per iteration
+	iterations = 1                     # number of iteration
 
-	agents = [Agent(nAct=nAct,Prob=0.4,theta=0.1,sweep=100)]#,Agent(nAct=nAct,Prob=0.4,theta=0.1,sweep=2),Agent(nAct=nAct,Prob=0.4,theta=0.1,sweep=3),Agent(nAct=nAct,Prob=0.4,theta=0.1,sweep=32)]
+	agents = [Agent(nAct=nAct,Prob=0.4,theta=0.1,sweep=1),Agent(nAct=nAct,Prob=0.4,theta=0.1,sweep=2),Agent(nAct=nAct,Prob=0.4,theta=0.1,sweep=3),Agent(nAct=nAct,Prob=0.4,theta=0.1,sweep=32)]
 	environment = Environment(agents=agents,iterations=iterations)
 
 	# Run Environment
@@ -153,7 +141,7 @@ if __name__ == "__main__":
 	print("Execution time: %s seconds" % (time.time() - start_time))
 
 
-	#Graph 1 - Averate rewards over all plays
+	#Graph1
 	plt.title("Value-Function")
 	plt.plot(V)
 	plt.ylabel('Value Estimates')
@@ -161,7 +149,7 @@ if __name__ == "__main__":
 	plt.legend(agents, loc=4)
 	plt.show()
 
-	#Graph 1 - optimal selections over all plays
+	#Graph 2
 	plt.title("Policy")
 	plt.plot(pi)
 	#plt.ylim(0, 100)
