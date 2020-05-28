@@ -10,7 +10,7 @@
 import numpy as np
 import time
 from tqdm import tqdm
-#from mpl_toolkits.mplot3d import Axes3D
+from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
 
@@ -29,9 +29,9 @@ class Agent(object):
 	def action(self,player_sum):
 		response=None
 		if player_sum<20:
-			response='hit'
-		if player_sum==21 or player_sum==21:
-			response='stick'
+			response="hit"
+		if player_sum==20 or player_sum==21:
+			response="stick"
 
 		return response
 
@@ -46,7 +46,7 @@ class Agent(object):
 			index=self.episode_map[i]
 			dealer_num=index[0]-1
 			player_sum=index[1]-12
-			self.value_estimates[dealer_num][player_sum]=reward/self.num_count[dealer_num][player_sum]
+			self.value_estimates[dealer_num][player_sum]+=reward   
 
 	def reset_episode(self):
 		self.episode_map*=0
@@ -54,6 +54,11 @@ class Agent(object):
 	def reset(self):
 		self.value_estimates*=0
 		self.num_count*=0
+
+	def print(self):
+		print("value_estimates:" + str(self.value_estimates))
+		print("counts: "+ str(self.num_count))
+
 
 
 class Environment(object):
@@ -66,7 +71,7 @@ class Environment(object):
 
 	def dealer_response(self,dealer_num):
 		while dealer_num<17:
-			dealer_num+=np.random.randint(low=1,high=10)
+			dealer_num+=np.random.randint(low=1,high=11)
 
 		return dealer_num
 
@@ -89,22 +94,34 @@ class Environment(object):
 
 	def play(self):
 		for num_episodes in tqdm(range(self.num_episodes)):
+			#print("New episode started")
+			#self.agents.print()
+
+
 			#generate number for dealer
-			dealer_num=np.random.randint(low=1,high=10)
-			player_sum=self.agents.initial_state
+			self.agents.reset_episode()
+			dealer_num=np.random.randint(low=1,high=11)
+			player_sum=np.random.randint(low=12,high=22)
 			initial_state=self.agents.initial_state
+			#print("Dealer Value: "+ str(dealer_num))
+			#print("Player sum: " + str(player_sum))
+			self.agents.episode(dealer_num,player_sum)  ##only beginning state  is added to episode
 			
 
 			while player_sum<=21:
-				self.agents.episode(dealer_num,player_sum)
+				#self.agents.episode(dealer_num,player_sum)  ##all the states are added to episode
 				response=self.agents.action(player_sum)
+				#print("Response generated: " + str(response))
 
-				if response=='hit':
-					player_sum+=np.random.randint(low=1,high=10)
+				if response=="hit":
+					player_sum+=np.random.randint(low=1,high=11)
+					#print("hit action called ")
+					#print("new player sum: " + str(player_sum))
 
-				if response=='stick':
-					self.agents.episode(dealer_num,player_sum)
+				if response=="stick":
+					#self.agents.episode(dealer_num,player_sum)
 					self.agents.final_player_sum=player_sum
+					#print("stick called thus break will be called")
 					break
 
 			if player_sum>21:
@@ -113,14 +130,16 @@ class Environment(object):
 			final_dealer_sum=self.dealer_response(dealer_num)
 			reward=self.reward_function(final_dealer_sum,self.agents.final_player_sum)
 			self.agents.first_visit_mc(reward)
+			#print("Epsiode is :" +str(self.agents.episode_map))
 
+		self.agents.value_estimates=self.agents.value_estimates/self.agents.num_count
 		return self.agents.value_estimates
 
 ################################################################
 ## MAIN ##
 if __name__ == "__main__":
 	start_time = time.time()    #store time to monitor execution                 
-	num_episodes= 1000                   # number of iteration
+	num_episodes= 500000                  # number of episodes
 
 	agents = Agent()
 	environment = Environment(agents=agents,num_episodes=num_episodes)
@@ -128,23 +147,22 @@ if __name__ == "__main__":
 	# Run Environment
 	print("Running...")
 	V = environment.play()
+	print(V)
 	print("Execution time: %s seconds" % (time.time() - start_time))
-	'''
+	
 	fig = plt.figure()
 	ax = fig.add_subplot(111,projection='3d')
 
 	for index_x in range(10):
 		for index_y in range(10):
-			ax.scatter(index_x, index_y, V[index_x][index_y],c='r', marker='o')
-	'''
+			ax.scatter(index_x+1, index_y+12, V[index_x][index_y],c='r', marker='o')
+	
 	#Graph1
-	
-	plt.title("Value-Function")
-	plt.plot(V)
-	plt.ylabel('Value Estimates')
-	plt.xlabel('State')
-	#plt.legend(agents, loc=4)
-	
+	ax.set_title('BLACK JACK STATE ESTIMATION')
+	ax.set_xlabel('Dealer Initial Value')
+	ax.set_ylabel('Player Sum')
+	ax.set_zlabel('Average Reward')
+
 	plt.show()
 
 
