@@ -25,3 +25,7 @@ act[7]=3
 
 p=np.argmax(act)
 print(p)
+
+policy=np.empty([2,2],dtype=str)
+policy[0][1]="hello"
+print(policy)
