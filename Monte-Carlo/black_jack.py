@@ -83,7 +83,7 @@ class Environment(object):
 		if player_sum<=21 and player_sum==dealer_num:
 			reward=0
 		if player_sum<=21 and dealer_num<=21 and player_sum<dealer_num:
-			reward=1
+			reward=-1
 		if player_sum>21:
 			reward=-1
 		if player_sum<=21 and dealer_num>21:

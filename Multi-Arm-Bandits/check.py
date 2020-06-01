@@ -29,3 +29,6 @@ print(p)
 policy=np.empty([2,2],dtype=str)
 policy[0][1]="hello"
 print(policy)
+p=np.zeros(10)
+p[1]=2
+if p[1]!=None
