@@ -14,21 +14,13 @@ print(a)
 print(b)
 '''
 
-act[0]=1
-act[1]=4
-act[2]=2
-act[3]=5
-act[4]=6
-act[5]=2
-act[6]=1
-act[7]=3
 
-p=np.argmax(act)
-print(p)
 
-policy=np.empty([2,2],dtype=str)
-policy[0][1]="hello"
-print(policy)
-p=np.zeros(10)
-p[1]=2
-if p[1]!=None
+a=np.zeros(2)
+a+=1
+b=np.zeros(2)
+b+=2
+c=[a,b]
+for i in range(len(c)):
+	list=c[i]
+	print(list)
