@@ -17,6 +17,7 @@ plt.style.use('fivethirtyeight')
 class Monte_Carlo_Agent(object):
 	def __init__(self,step_size):
 		self.value_estimates=np.zeros(5)
+		self.value_estimates+=0.5
 		self.true_value_estimates=np.zeros(5)
 		for i in range(len(self.true_value_estimates)):
 			self.true_value_estimates[i]=(i+1)/6
@@ -57,6 +58,7 @@ class Monte_Carlo_Agent(object):
 class TD_Agent(object):
 	def __init__(self,step_size):
 		self.value_estimates=np.zeros(5)
+		self.value_estimates+=0.5
 		self.true_value_estimates=np.zeros(5)
 		for i in range(len(self.true_value_estimates)):
 			self.true_value_estimates[i]=(i+1)/6
@@ -175,7 +177,7 @@ if __name__ == "__main__":
 	start_time = time.time()    #store time to monitor execution
 	num_episodes=100
 
-	agents = [Monte_Carlo_Agent(step_size=0.01),TD_Agent(step_size=0.1)]
+	agents = [Monte_Carlo_Agent(step_size=0.01),TD_Agent(step_size=0.15)]
 	environment = Environment(agents=agents,num_episodes=num_episodes)
 
 	# Run Environment
