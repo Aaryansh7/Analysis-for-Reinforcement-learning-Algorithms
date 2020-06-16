@@ -23,6 +23,12 @@ run the code(as per the correct file path):
 <img src="result_images/Figure_4.png" alt="drawing" width="420"/><img src="result_images/Figure_3.png" alt="drawing" width="420"/>
 
 Since the Epsilon agent has the ability to explore, it eventually gets better than the Greedy agent which always follows the highest Q value action but fails to explore the better one. 
+</br>
+</br>
+</br>
+</br>
+
+
 
 
 ### 2.Sample-Average vs Constant-step_size
