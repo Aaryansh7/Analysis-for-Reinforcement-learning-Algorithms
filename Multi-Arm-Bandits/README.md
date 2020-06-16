@@ -1,5 +1,11 @@
 # Multi-Armed-Bandits
 
+Multi-Armed Bandits also refered to as k-Armed Bandits is basically a problem statement.This problem forms the most basic idea of Reinforcement Learning.It states that if an agent is repeatedly face by k-different actions and each action gives a reward (reward depends on the actions),then how can the agent maximize the overall reward in a given time span(or time-steps).</br>
+
+To analyse varoius solutions we have taken a sample environment as described below:
+<img src="result_images/test_bed.png" alt="drawing" width="420"/>
+
+
 Here are test and comparison results of some simple methods used in Reinforcement Learning(RL).All of them have been done on ten-armed test band.
 For each method there have been slight variations in the way  ten-armed test band has been formulated.</br>
 
