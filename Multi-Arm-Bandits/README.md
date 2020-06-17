@@ -61,6 +61,10 @@ The effect of optimistic initial action-value estimates on the 10-armed testbed.
 
 
 ### 2.Upper Confidence Bound
+<img src="result_images/formula_ucb.png" alt="drawing" width="420"/>
+
+The idea of this upper confidence bound (UCB) action selection is that the square-root term is a measure of the uncertainty  in the estimate of a’s value. The quantity being maxed over is thus a sort of upper bound on the possible true value of action a, with c determining the confidence level. Each time a is selected the uncertainty is presumably reduced: Nt (a) increments, and, as it appears in the denominator, the uncertainty term decreases. On the other hand, each time an action other than a is selected, t increases but Nt (a) does not; because t appears in the numerator, the uncertainty estimate increases.
+The use of the natural logarithm means that the increases get smaller over time, but are unbounded; all actions will eventually be selected, but actions with lower value estimates,or that have already been selected frequently, will be selected with decreasing frequency over time.
 
 run the code(as per the correct file path):
 >python3 ucb.py
