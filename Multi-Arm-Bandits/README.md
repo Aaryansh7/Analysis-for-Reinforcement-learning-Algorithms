@@ -49,13 +49,14 @@ run the code(as per the correct file path):
 
 
 ### 3.Optimistic-greedy vs epsilon-greedy
-
+Initial action values can also be used as a simple way to encourage exploration. Instead of setting the initial action values to zero, we set them all to +5. Recall that the q(a) in this problem are selected from a normal distribution with mean 0 and variance 1. An initial estimate of +5 is thus wildly optimistic. This optimism encourages action-value methods to explore. Whichever actions are initially selected, the reward is less than the starting estimates; the learner switches to other actions, being “disappointed” with the rewards it is receiving. The result is that all actions are tried several times before the value estimates converge. The system does a fair amount of exploration even if greedy actions are selected all the time.</br>
 run the code(as per the correct file path):
 >python3 optimistic\\epsilon-greedy.py
 
 #### Results are as follows
 
-<img src="result_images/Figure_6.png" alt="drawing" width="420"/><img src="result_images/Figure_7.png" alt="drawing" width="420"/>
+<img src="result_images/Figure_6.png" alt="drawing" width="420"/><img src="result_images/Figure_7.png" alt="drawing" width="420"/></br>
+The effect of optimistic initial action-value estimates on the 10-armed testbed.Both methods used a constant step-size parameter= 0.1.
 
 
 ### 2.Upper Confidence Bound
