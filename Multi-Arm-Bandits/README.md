@@ -33,12 +33,20 @@ Since the Epsilon agent has the ability to explore, it eventually gets better th
 
 ### 2.Sample-Average vs Constant-step_size
 
+In Sample-Average method we follow the normal method of averaging the rewards to determine Q(A). In constant-step_size we use a constant step-size as parameter to update Q(a).</br>
+Qn+1 = Qn + a[ Rn + Qn] ,where a is step-size
+
 run the code(as per the correct file path):
 >python3 Sample-avg\\constant-step_size.py
 
 #### Results are as follows
 
 <img src="result_images/Figure_1.png" alt="drawing" width="420"/><img src="result_images/Figure_2.png" alt="drawing" width="420"/>
+</br>
+</br>
+</br>
+</br>
+
 
 ### 3.Optimistic-greedy vs epsilon-greedy
 
