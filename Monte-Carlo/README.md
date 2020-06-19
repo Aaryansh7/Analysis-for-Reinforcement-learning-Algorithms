@@ -1,5 +1,8 @@
 # Monte Carlo Methods
 
+Monte Carlo methods require only experience—sample sequences of states, actions, and rewards from actual or simulated interaction with an environment.Learning from actual experience is striking because it requires no prior knowledge of the environment’s dynamics, yet can still attain optimal behavior.</br>
+Monte-Carlo methods are a type of model-free RL methods where one finds optimal control without prior knowledge of model.
+
 Here are test and comparison results of some simple methods used in monte carlo methods under Reinforcement Learning(RL).</br>
 
 ### 1.Black Jack
