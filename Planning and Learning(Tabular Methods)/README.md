@@ -15,11 +15,13 @@ I have used Dyna-Q planning method to solve this maze.The algo has been used for
 run the code(as per the correct file path):
 >python3 dyna_maze.py
 
-###### Graph for steps-vs-episodes.
+##### Graph for steps-vs-episodes.
 
-<img src="result_images/Figure_1.png" alt="" width="420"/><img src="result_images/Figure_2.png" alt="" width="420"/>
+<img src="result_images/Figure_3.png" alt="" width="420"/><img src="result_images/Figure_11.png" alt="" width="420"/>
+<img src="result_images/Figure_17.png" alt="" width="420"/>
 
 
-###### Final Path Followed
-<img src="result_images/Figure_1.png" alt="" width="420"/><img src="result_images/Figure_2.png" alt="" width="420"/>
+##### Final Path Followed
+<img src="result_images/Figure_2.png" alt="" width="420"/><img src="result_images/Figure_16.png" alt="" width="420"/>
+<img src="result_images/Figure_24.png" alt="" width="420"/>
 
