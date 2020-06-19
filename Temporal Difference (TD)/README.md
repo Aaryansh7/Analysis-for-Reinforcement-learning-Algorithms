@@ -25,6 +25,7 @@ The left graph above shows the values learned after various numbers of episodes 
 
 A standard gridworld, with start and goal states, but with one di↵erence: there is a crosswind running upward
 through the middle of the grid. The actions are the standard four—up, down, right,and left—but in the middle region the resultant next states are shifted upward by a “wind,” the strength of which varies from column to column.Below is its diagram which shows the optimal path also:
+</br>
 <img src="result_images/Figure_1.png" alt="" width="420"/>
 </br>
 
@@ -32,5 +33,7 @@ through the middle of the grid. The actions are the standard four—up, down, ri
 
 <img src="result_images/Figure_3.png" alt="" width="420"/><img src="result_images/Figure_7.png" alt="" width="420"/>
 </br>
+
+I have used SARSA in this problem.The graph on left shows the number of episodes versus time steps.As can be seen,the slope decreases meaning that task is accomplished in lesser time steps.The right graph shows the last path followed by the agent,which comes out to be the optimal path!
 
 
