@@ -23,7 +23,7 @@ The left graph above shows the values learned after various numbers of episodes 
 
 ### 2.Windy-Grid Problem
 
-A standard gridworld, with start and goal states, but with one di↵erence: there is a crosswind running upward
+A standard gridworld, with start and goal states, but with one difference: there is a crosswind running upward
 through the middle of the grid. The actions are the standard four—up, down, right,and left—but in the middle region the resultant next states are shifted upward by a “wind,” the strength of which varies from column to column.Below is its diagram which shows the optimal path also:
 </br>
 <img src="result_images/diagram_grid_world.png" alt="" width="420"/>
