@@ -9,7 +9,7 @@ find a good approximate solution using limited computational resources. Therefor
 In this, problem I have used Tile coading for function approximation.Tile coading is a type of Coarse coading.Tile coading makes it very easy to comput RL algos in more than one dimensional space.
 The environment of this problem has been taken from Opengym-Ai,so more details can be found from there.I have used SARSA for gradient descent and updating action-values.
 </br>
-<img src="result_images/tile_fig1.png" alt="" width="420"/>
+<img src="result_images/tile_fig1.png" alt="" width="500"/>
 </br>
 Above diagram showshow features are constructed using tile coading.
 
@@ -20,4 +20,4 @@ run the code(as per the correct file path):
 
 <img src="result_images/Figure_1.png" alt="" width="420"/>
 </br>
-The left graph above shows the values learned after various numbers of episodes on a single run of TD(0).The right graph shows learning curves for the two methods for various values of alpha. The performance measure shown is the root mean-squared (RMS) error between the value function learned and the true valuefunction, averaged over the five states, then averaged over 100 runs.
+the graph shows how agents learn optimal strategy over time.The no.of time steps per episode starts decreasing and averages arounf 150 after 100 episodes
