@@ -20,4 +20,4 @@ run the code(as per the correct file path):
 
 <img src="result_images/Figure_2.jpg" alt="" width="420"/><img src="result_images/Figure_1.png" alt="" width="420"/>
 </br>
-On left is the picture of the mountain-car environment.The right graph shows how agents learn optimal strategy over time.The no.of time steps per episode starts decreasing and averages arounf 150 after 100 episodes
+On left is the picture of the mountain-car environment.The right graph shows how agents learn optimal strategy over time.The no.of time steps per episode starts decreasing and averages around 150 after 50 episodes
