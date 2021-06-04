@@ -174,6 +174,8 @@ if __name__ == '__main__':
 				print()
 
 
+	plt.style.use('fivethirtyeight')
+	
 	fig, axes = plt.subplots(3, sharex=True, figsize=(12, 8))
 	axes[0].set_ylabel("Policy_Loss", fontsize=14)
 	axes[0].set_xlabel("Episodes", fontsize=14)
