@@ -9,7 +9,7 @@ from tqdm import tqdm
 env = gym.make('CartPole-v0')
 
 #CONSTANTS
-MAX_EPISODES = 750
+MAX_EPISODES = 1000
 GAMMA = 0.99
 HIDDEN_LAYERS = 2
 
@@ -18,9 +18,9 @@ class myModel(Model):
 
 	def __init__(self, output_shape):
 		super(myModel,self).__init__()
-		self.layer1 = Dense(16, activation='relu', name='layer1', input_shape=(4,))
-		self.layer2 = Dense(16, activation='relu', name='layer2')
-		self.layer3 = Dense(16, activation='relu', name='layer3')
+		self.layer1 = Dense(32, activation='relu', name='layer1', input_shape=(4,))
+		self.layer2 = Dense(32, activation='relu', name='layer2')
+		self.layer3 = Dense(32, activation='relu', name='layer3')
 		self.layer4 = Dense(output_shape, activation='softmax', name='layer4')
 
 	def call(self, input_data):

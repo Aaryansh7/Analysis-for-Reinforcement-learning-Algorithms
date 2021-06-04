@@ -21,8 +21,8 @@ class Actor(Model):
 	def __init__(self, output_shape):
 		super(Actor,self).__init__()
 		self.layer1 = Dense(32, activation='relu', name='layer1')
-		self.layer2 = Dense(16, activation='relu', name='layer2')
-		self.layer3 = Dense(16, activation='relu', name='layer3')
+		self.layer2 = Dense(32, activation='relu', name='layer2')
+		self.layer3 = Dense(32, activation='relu', name='layer3')
 		self.layer4 = Dense(output_shape, activation='softmax', name='layer4')
 
 	def call(self, input_data):
@@ -39,9 +39,9 @@ class Critic(Model):
 
 	def __init__(self):
 		super(Critic,self).__init__()
-		self.layer1 = Dense(16, activation='relu', name='layer1')
-		self.layer2 = Dense(16, activation='relu', name='layer2')
-		self.layer3 = Dense(16, activation='relu', name='layer3')
+		self.layer1 = Dense(32, activation='relu', name='layer1')
+		self.layer2 = Dense(32, activation='relu', name='layer2')
+		self.layer3 = Dense(32, activation='relu', name='layer3')
 		self.layer4 = Dense(1, activation='relu', name='layer4')
 
 	def call(self, state):
