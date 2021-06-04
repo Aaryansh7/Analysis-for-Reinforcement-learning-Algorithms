@@ -14,5 +14,5 @@ python3 cartpole_actor_critic.py
 ```
 Results
 </br>
-<img src="results/Figure_1.png" alt="" width="500"/>
+<img src="results/Figure_1.png" alt="" width="700"/>
 </br>
